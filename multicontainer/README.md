@@ -27,22 +27,21 @@ For our image setup, we'll need to build an image from the Docker Hub's official
 ### Creating a network
 If we want our all ROS nodes to easily talk to each other, we'll can use a virtual network to connect the separate containers. Same is possible for connecting containers from separate hosts, this however is a bit more advanced and will addressed in a later tutorial.
 
->To create a new network `foo`, we use the network command:
+> To create a new network `foo`, we use the network command:
 
     docker network create foo
 
-### Creating the services
-Now that we have a network, we can create services. Services advertise there location on the network, making it easy to resolve the location/address of the service on the network. We'll use this make sure our ROS nodes can find and connect to our ROS `master`.
+Now that we have a network, we can create services. Services advertise there location on the network, making it easy to resolve the location/address of the service specific container. We'll use this make sure our ROS nodes can find and connect to our ROS `master`.
 
 > To create a container for the ROS master and advertise it's service:
 
-    docker run -it \
+    docker run -it --rm\
         --publish-service=master.foo \
         --name master \
         ros:ros-tutorials \
         roscore
 
-> Now you can see that rosmaster is running and is ready master our other ROS nodes. To add our `talker` node, we'll need to point the relevant environment variable to the master service:
+> Now you can see that master is running and is ready manage our other ROS nodes. To add our `talker` node, we'll need to point the relevant environment variable to the master service:
 
     docker run -it \
         --publish-service=talker.foo \
@@ -62,7 +61,7 @@ Now that we have a network, we can create services. Services advertise there loc
         ros:ros-tutorials \
         rosrun roscpp_tutorials listener
 
-> Alright! You should see `listener` is now echoing each message the `talker` broadcasting. You can then list the containers and see somthing like this:
+> Alright! You should see `listener` is now echoing each message the `talker` broadcasting. You can then list the containers and see something like this:
 
     $ docker service ls
     SERVICE ID          NAME                NETWORK             CONTAINER
@@ -79,12 +78,12 @@ Now that we have a network, we can create services. Services advertise there loc
     f6ab9155fdbe        ros:ros-tutorials   "/ros_entrypoint.sh    About a minute ago   Up About a minute   11311/tcp           master
 
 ### Introspection
-Ok, now that we se the two nodes are communicating, let get inside one of the containers and doo some introspection what exactly the topics are:
+Ok, now that we see the two nodes are communicating, let get inside one of the containers and do some introspection what exactly the topics are:
 
     docker exec -it master bash
     source /ros_entrypoint.sh
 
-> If we then use `rostopic` to list published message topics, we should see somthing like this:
+> If we then use `rostopic` to list published message topics, we should see something like this:
 
     $ rostopic list
     /chatter
@@ -92,7 +91,7 @@ Ok, now that we se the two nodes are communicating, let get inside one of the co
     /rosout_agg
 
 ### Tear down
-To tear down the structer we've made, we just need to stop the containers and remove the services.
+To tear down the structure we've made, we just need to stop the containers and remove the services.
 
 > We can stop and remove the containers using the names we gave them:
 

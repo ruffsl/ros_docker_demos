@@ -2,7 +2,7 @@
 FROM ros:indigo-ros-base
 MAINTAINER ruffsl roxfoxpox@gmail.com
 
-# install ros packages
+# install ros tutorials packages
 RUN apt-get update && apt-get install -y \
     ros-indigo-ros-tutorials \
     ros-indigo-common-tutorials \
