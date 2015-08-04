@@ -1,0 +1,45 @@
+# gazebo5:
+#     build: gazebo6/.
+#     user: ruffsl
+#     working_dir: /home/ruffsl
+#     volumes:
+#         - "/home:/home"
+#         - "/dev/snd:/dev/snd"
+#         - "/etc/group:/etc/group:ro"
+#         - "/etc/passwd:/etc/passwd:ro"
+#         - "/etc/shadow:/etc/shadow:ro"
+#         - "/etc/sudoers.d:/etc/sudoers.d:ro"
+#         - "/etc/localtime:/etc/localtime:ro"
+#         - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+#     devices:
+#         - "/dev/nvidia0"
+#         - "/dev/nvidiactl"
+#     environment:
+#         - "DISPLAY"
+#         - "QT_X11_NO_MITSHM=1"
+#     command: gazebo --verbose
+
+turtlebot:
+    build: turtlebot/.
+    user: ruffsl
+    working_dir: /home/ruffsl
+    volumes:
+        - "/home:/home"
+        - "/dev/snd:/dev/snd"
+        - "/etc/group:/etc/group:ro"
+        - "/etc/passwd:/etc/passwd:ro"
+        - "/etc/shadow:/etc/shadow:ro"
+        - "/etc/sudoers.d:/etc/sudoers.d:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+        - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+    devices:
+        - "/dev/nvidia0"
+        - "/dev/nvidiactl"
+        - "/dev/input"
+    environment:
+        - "DISPLAY"
+        - "QT_X11_NO_MITSHM=1"
+    #     - "GAZEBO_MASTER_URI=gazebo5:11345"
+    # links:
+    #     - gazebo5
+    command: roslaunch /tmp/my_turtlebot_simulator.launch
