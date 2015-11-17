@@ -1,0 +1,21 @@
+master:
+  build: .
+  container_name: master
+  command:
+    - roscore
+
+talker:
+  build: .
+  container_name: talker
+  environment:
+    - "ROS_HOSTNAME=talker"
+    - "ROS_MASTER_URI=http://master:11311"
+  command: rosrun roscpp_tutorials talker
+
+listener:
+  build: .
+  container_name: listener
+  environment:
+    - "ROS_HOSTNAME=listener"
+    - "ROS_MASTER_URI=http://master:11311"
+  command: rosrun roscpp_tutorials listener
