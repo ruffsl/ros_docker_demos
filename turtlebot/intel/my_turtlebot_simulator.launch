@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch" />
+    <include file="$(find turtlebot_teleop)/launch/keyboard_teleop.launch" />
+    <include file="$(find turtlebot_rviz_launchers)/launch/view_robot.launch" />
+</launch>
