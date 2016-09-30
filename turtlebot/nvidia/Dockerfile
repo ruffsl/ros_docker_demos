@@ -12,7 +12,7 @@ RUN gzserver --verbose --iters 1 /opt/ros/${ROS_DISTRO}/share/turtlebot_gazebo/w
 # install custom launchfile
 ADD my_turtlebot_simulator.launch /
 
-# Add Nvidia support by including nvidia-docker hooks
+# Add Nvidia display support by including nvidia-docker hooks
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 ENV PATH /usr/local/nvidia/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
